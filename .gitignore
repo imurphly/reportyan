@@ -1,0 +1,23 @@
+##filter databfile、sln file##
+*.pdf 
+*.log
+*.aux
+*.JPG
+*.jpg
+exercise.tex
+*.gz
+*.synctex.gz
+*.toc
+exercise.tex
+*.out
+
+# OS generated files #  
+.DS_Store  
+.DS_Store?  
+._*  
+.Spotlight-V100  
+.Trashes  
+Icon?  
+ehthumbs.db  
+Thumbs.db  
+AIA/do_it_yourself/DoItYourself-SDT\.tex\.bak
