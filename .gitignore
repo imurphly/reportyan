@@ -10,6 +10,8 @@ exercise.tex
 *.toc
 exercise.tex
 *.out
+*.bbl
+*.blg
 
 # OS generated files #  
 .DS_Store  
