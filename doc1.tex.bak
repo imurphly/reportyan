@@ -317,5 +317,58 @@ This paper proposed to design a controller for trajectory tracking in depth and 
 1.结论一：Luc Jaulin 《Mobile Robotica》中 Reaction wheel pendulum练习中模型为倒立摆简化模型，没有考虑摆体角速度和飞轮角速度之间的耦合关系， 所以反馈线性化不适用！！！继续采用 $H_\infty$ 控制方法。\\
 2.结论二：控制目标： $\theta_b \rightarrow 0, \dot{\theta_b} \rightarrow 0, \dot{\theta_w} \rightarrow 0$, 系统输入 $r = 0$， 所以 $w$ 只有外界的风浪流等干扰输入。\\
 3.问题： 具体化$w$？？？\\
+\section{2019.08.24}
+\subsection{BlueROV heading 实验准备工作}
+假设已经对~BlueROV 建模并求解出艏摇控制器，现需要做实验验证。(VISIO图)\\
+目标： 得到~BlueROV 系统的输出响应曲线和控制器输出力矩曲线。\\
+数据采集方法：用摄像头传回图像，在~PC 上拟合出每一时刻的偏航角并画出曲线。\\
+1.准备工作：
+\begin{itemize}
+\item 利用~opencv 库对视频拟合偏航角。
+\begin{itemize}
+\item 拟合出图像中的红线(2019-08-25)
+\item 拟合出视频中第一帧中的红线
+\item 拟合出两个时刻间红线的夹角
+\item 给没加控制器的~BlueROV 拍视频，在此视频上进行操作。
+\item 正式做实验
+\end{itemize}
+\item 将控制器用~FPGA 实现。
+\end{itemize}
+2.细节：
+\begin{itemize}
+\item 摄像头型号？ 对蓝色的~BlueROV来说，在上面画条红线是最方便识别的颜色吗？
+\end{itemize}
+\section{2019.08.28}
+%同样，复制Mat实例时，实际上并未复制实际数据。相反，引用计数器递增以记住存在相同数据的另一个所有者。还有Mat :: clone方法可以创建矩阵数据的完整副本。
+\subsection{陀螺}
+\paragraph{from jump up to stable}
+This paper used a digit LQR controller to balance Cubli:
+\begin{itemize}
+\item first balance without external input(r), just engine torque(u); init state: $[\theta_b;\dot{\theta_b};\dot{\theta_w}]=[-0.1;2;2]$, stable state:$[\theta_b;\dot{\theta_b};\dot{\theta_w}]=[0;0;0]$.
+\item then when the Cubli is static, fiddling with it equals to input "r", u is still same; init state: $[\theta_b;\dot{\theta_b};\dot{\theta_w}]=[0;0;0]$ , r=1, stable state:$[\theta_b;\dot{\theta_b};\dot{\theta_w}]=[0;0;interval[-1.9,-2] ]$
+\end{itemize}
+\section{2019.09.06}
+\subsection{Robust Control of a Mass-Damping-Spring System}
+\section{2019.09.07}
+\subsection{Robustness analysis: Singular value(nominal performance), $\mu$ analysis(robust stability bound), robust performance analysis}
+\begin{itemize}
+\item Coding to check the controller for Mass-Damping-Spring System. yes!
+\item 2019-09-09 Coding to check the controller for CISCREA yaw system. yes!
+\item 2019-09-09 Chapter 9: A Triple Inverted Pendulum Control System Design. 
+\end{itemize}
+\section{2019.09.09}
+$H_{\infty}$控制器和 $\mu$ 控制器各自的优缺点。\\
+$H_{\infty}$ 控制器抗干扰，但是鲁棒稳定性和鲁棒鲁棒性能不能保证。\\
+$\mu$ 控制器能够很好的保持鲁棒稳定性和鲁棒性能，但是也只能在有限的时间内维持。且控制器维数较高。\\
+我的需求：抗测量噪声，降低鲁棒要求，应用$H_{\infty}$控制器\\
+\paragraph{不确定性}
+结构不确定性
+参数不确定性： 惯量I，电机系数 ~$ km $.
+\section{2019.09.10}
+\subsection{为Cubli设计经典 $H_{\infty}$ 鲁棒控制器}
+\begin{itemize}
+\item 1.不确定性： 实验发现惯量 $I_b, I_w$ 属于敏感参数，且电机系数 ~$km$ 辨识可能存在误差
+\end{itemize}
+%执行器：为了考虑未建模的动力学和非线性效应，执行器模型中的不确定性近似未输入乘性不确定性，从而产生扰动传递函数。
 \end{document}
-\paragraph{title:  author: year:}
+%\paragraph{title:  author: year:}
