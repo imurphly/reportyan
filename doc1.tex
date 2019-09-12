@@ -369,9 +369,54 @@ $\mu$ 控制器能够很好的保持鲁棒稳定性和鲁棒性能，但是也�
 \begin{itemize}
 \item 1.不确定性： 实验发现惯量 $I_b, I_w$ 属于敏感参数;且电机系数 ~$km$ 辨识可能存在误差。所以选取的不确定量为 ${I_b, I_w,km}$。
 \item 2.主要任务： 实验仿真发现飞轮速度对噪声敏感，所以需抗噪。假设电机上存在低频干扰，则设计中要考虑的输入有${ref,dist,noise}$。
-\item 3.控制框图： 以 $[y+Wn*n;r]$为控制器输入，详见Control.visio。
+\item 3.控制框图： 以 $[y+Wn*n;r]$为控制器输入，详见Control.pdf。
 \item 4.结果： $\gamma$ 的边界为无穷大。 $K = []$
 \end{itemize}
 %执行器：为了考虑未建模的动力学和非线性效应，执行器模型中的不确定性近似未输入乘性不确定性，从而产生扰动传递函数。
+\section{2019.09.11}
+\subsection{为Cubli设计经典 $H_{\infty}$ 鲁棒控制器}
+\begin{itemize}
+\item Version2: 不考虑disturbance.\\
+\item Version3: 降低鲁棒性要求，不确定变量${I_b, I_w, km} \rightarrow {km}$。\\
+\item Version4: 增加状态变量和输出变量 $\theta_w$, 因此 $x = [\theta_b;\dot{\theta_b};\theta_w;\dot{\theta_w}]$
+\end{itemize}
+\subsection{鲁棒控制基础-苏宏业}
+\paragraph{系统稳定性判据和二次性能保界判据}
+\begin{itemize}
+\item 对于线性时不变系统：如果系统闭环极点均位于左半平面，则系统稳定。
+\item 对于更一般的系统，构建~Lyapunov 能量函数，如果能量函数在时间域衰减，则系统稳定。求解步骤：将 $\dot{V}$ 转换为 LMI，在这过程中频繁使用 ~$Schur$ 补。
+\item 对于系统二次性能要求，定义 ~Lyapunov 性能函数，同上处理。
+\end{itemize}
+\paragraph{Schur补}
+$S=[
+\begin{matrix}
+S_{11} & S_{12}\\
+S_{12}^{T} & S_{22}
+\end{matrix}
+] < 0$\\
+if $S_{11}<0$, then $S_{22}-S_{12}^{T}*S_{11}^{-1}*S_{12}$\\
+if $S_{22}<0$, then $S_{11}-S_{12}*S_{22}^{-1}*S_{12}^{T}$
+\section{2019.09.12}
+\subsection{Robust Control Design with MATLAB, Second Version}
+The difference from 1th edition: Consisted with three Part, the new PartII makes
+the MATLAB material more accessible and focused.
+
+The contents(logic) of the basic method and theory: Control system representation. Model of uncertainty. Robust design specification. Design method:
+\begin{itemize}
+\item $H_{\infty}$ design
+\item $H_{\infty}$ loop-shaping design procedure
+\item $\mu $ analysis and synthesis 
+\end{itemize}
+Lower order controllers. LMI approach.
+
+The benchmark control system examples:
+\begin{itemize}
+\item Hard disc drive control
+\item Triple inverted pendulum system
+\item A high purity distillation system
+\item A flexible-link manipulator system
+\item A twin rotor aerodynamical system
+\item A self balanced two-wheeled robot.
+\end{itemize}
 \end{document}
 %\paragraph{title:  author: year:}
